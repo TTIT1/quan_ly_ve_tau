@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt Vé - Hệ Thống Đặt Vé</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <script>
+        if (!localStorage.getItem('isLoggedIn')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Đặt Vé</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Trang Chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="search-results.html?type=train">Tàu Hỏa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="search-results.html?type=flight">Máy Bay</a>
+                    </li>
+                </ul>
+                <div class="d-flex" id="authButtons">
+                    <a href="login.html" class="btn btn-outline-light me-2">Đăng Nhập</a>
+                    <a href="register.html" class="btn btn-primary me-2">Đăng Ký</a>
+                </div>
+                <div class="d-flex d-none" id="userButtons">
+                    <a href="my-tickets.html" class="btn btn-outline-light me-2">Vé Của Tôi</a>
+                    <button onclick="logout()" class="btn btn-danger">Đăng Xuất</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="booking-container">
+            <h2 class="text-center mb-4">Đặt Vé</h2>
+            
+            <div class="trip-details">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-info-circle me-2"></i>Thông Tin Chuyến Đi</h5>
+                        <p><strong>Điểm Đi:</strong> <span id="departure"></span></p>
+                        <p><strong>Điểm Đến:</strong> <span id="arrival"></span></p>
+                        <p><strong>Ngày:</strong> <span id="date"></span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-clock me-2"></i>Lịch Trình</h5>
+                        <p><strong>Giờ Khởi Hành:</strong> <span id="departureTime"></span></p>
+                        <p><strong>Giờ Đến:</strong> <span id="arrivalTime"></span></p>
+                        <p><strong>Thời Gian:</strong> <span id="duration"></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="passenger-form">
+                <h4 class="mb-4">Thông Tin Hành Khách</h4>
+                <form id="bookingForm">
+                    <input type="hidden" id="tripId" name="tripId">
+                    <input type="hidden" id="tripType" name="tripType">
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Số Lượng Hành Khách</label>
+                        <select class="form-select" id="passengerCount" name="passengerCount" onchange="updatePassengerForms()">
+                            <option value="1">1 Hành Khách</option>
+                            <option value="2">2 Hành Khách</option>
+                            <option value="3">3 Hành Khách</option>
+                            <option value="4">4 Hành Khách</option>
+                        </select>
+                    </div>
+
+                    <div id="passengerForms">
+                        <!-- First passenger form -->
+                        <div class="passenger-details mb-4">
+                            <h5>Hành Khách 1</h5>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Họ và Tên</label>
+                                    <input type="text" class="form-control" name="passengers[0].fullName" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Số CMND/Hộ Chiếu</label>
+                                    <input type="text" class="form-control" name="passengers[0].idNumber" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" name="passengers[0].email" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Số Điện Thoại</label>
+                                    <input type="tel" class="form-control" name="passengers[0].phone" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5>Thông Tin Thanh Toán</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Số Thẻ</label>
+                                <input type="text" class="form-control" name="cardNumber" required>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Ngày Hết Hạn</label>
+                                <input type="text" class="form-control" placeholder="MM/YY" name="expiryDate" required>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">CVV</label>
+                                <input type="text" class="form-control" name="cvv" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Xác Nhận Đặt Vé</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // Get trip details from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const tripType = urlParams.get('type');
+        const tripId = parseInt(urlParams.get('id'));
+
+        // Find trip details
+        const trip = tripType === 'train' ? 
+            mockData.trains.find(t => t.id === tripId) : 
+            mockData.flights.find(f => f.id === tripId);
+
+        if (!trip) {
+            window.location.href = 'index.html';
+        }
+
+        // Display trip details
+        document.getElementById('tripId').value = tripId;
+        document.getElementById('tripType').value = tripType;
+        document.getElementById('departure').textContent = tripType === 'train' ? trip.departureStation : trip.departureAirport;
+        document.getElementById('arrival').textContent = tripType === 'train' ? trip.arrivalStation : trip.arrivalAirport;
+        document.getElementById('date').textContent = formatDate(trip.departureTime);
+        document.getElementById('departureTime').textContent = formatTime(trip.departureTime);
+        document.getElementById('arrivalTime').textContent = formatTime(trip.arrivalTime);
+        document.getElementById('duration').textContent = trip.duration;
+
+        // Handle form submission
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const bookingData = Object.fromEntries(formData.entries());
+            
+            // Create ticket object
+            const ticket = {
+                id: Date.now(),
+                type: tripType,
+                departure: tripType === 'train' ? trip.departureStation : trip.departureAirport,
+                arrival: tripType === 'train' ? trip.arrivalStation : trip.arrivalAirport,
+                date: formatDate(trip.departureTime),
+                departureTime: formatTime(trip.departureTime),
+                arrivalTime: formatTime(trip.arrivalTime),
+                duration: trip.duration,
+                passengerName: bookingData['passengers[0].fullName'],
+                idNumber: bookingData['passengers[0].idNumber'],
+                email: bookingData['passengers[0].email'],
+                status: 'Confirmed'
+            };
+            
+            // Save ticket to localStorage
+            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            tickets.push(ticket);
+            localStorage.setItem('tickets', JSON.stringify(tickets));
+            
+            // Redirect to my tickets page
+            window.location.href = 'my-tickets.html';
+        });
+
+        // Update passenger forms
+        function updatePassengerForms() {
+            const count = document.getElementById('passengerCount').value;
+            const container = document.getElementById('passengerForms');
+            container.innerHTML = '';
+
+            for (let i = 0; i < count; i++) {
+                const form = document.createElement('div');
+                form.className = 'passenger-details mb-4';
+                form.innerHTML = `
+                    <h5>Hành Khách ${i + 1}</h5>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Họ và Tên</label>
+                            <input type="text" class="form-control" name="passengers[${i}].fullName" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Số CMND/Hộ Chiếu</label>
+                            <input type="text" class="form-control" name="passengers[${i}].idNumber" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="passengers[${i}].email" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Số Điện Thoại</label>
+                            <input type="tel" class="form-control" name="passengers[${i}].phone" required>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(form);
+            }
+        }
+
+        // Helper functions
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('vi-VN');
+        }
+
+        function formatTime(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = 'login.html';
+        }
+
+        // Ẩn/hiện nút đăng nhập/đăng ký hoặc vé của tôi/đăng xuất
+        document.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('isLoggedIn')) {
+                document.getElementById('authButtons').classList.add('d-none');
+                document.getElementById('userButtons').classList.remove('d-none');
+            } else {
+                document.getElementById('authButtons').classList.remove('d-none');
+                document.getElementById('userButtons').classList.add('d-none');
+            }
+        });
+    </script>
+</body>
+</html> 

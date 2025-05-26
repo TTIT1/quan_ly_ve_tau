@@ -1,0 +1,115 @@
+/* Common styles */
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.search-box {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+/* Card styles */
+.route-card {
+    height: 100%;
+    transition: transform 0.3s;
+}
+
+.route-card:hover {
+    transform: translateY(-5px);
+}
+
+.route-card .card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.route-card .btn {
+    margin-top: auto;
+}
+
+/* Result card styles */
+.result-card {
+    transition: transform 0.3s;
+    margin-bottom: 20px;
+}
+
+.result-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.price-tag {
+    font-size: 1.5rem;
+    color: #28a745;
+    font-weight: bold;
+}
+
+.duration {
+    color: #6c757d;
+}
+
+.available-seats {
+    color: #dc3545;
+}
+
+/* Form styles */
+.form-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Ticket styles */
+.ticket-card {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    transition: transform 0.2s;
+}
+
+.ticket-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.ticket-header {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px 10px 0 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.ticket-body {
+    padding: 20px;
+}
+
+.ticket-status {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.9em;
+}
+
+.status-confirmed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-cancelled {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+} 

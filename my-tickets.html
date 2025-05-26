@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vé Của Tôi - Hệ Thống Đặt Vé</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Đặt Vé</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Trang Chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="search-results.html?type=train">Tàu Hỏa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="search-results.html?type=flight">Máy Bay</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="my-tickets.html" class="btn btn-outline-light me-2">Vé Của Tôi</a>
+                    <button onclick="logout()" class="btn btn-danger">Đăng Xuất</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h2 class="mb-4">Vé Của Tôi</h2>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div id="ticketsList">
+                    <!-- Tickets will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        if (!localStorage.getItem('isLoggedIn')) {
+            window.location.href = 'login.html';
+        }
+
+        // Display tickets
+        function displayTickets() {
+            const container = document.getElementById('ticketsList');
+            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            
+            if (tickets.length === 0) {
+                container.innerHTML = `
+                    <div class="alert alert-info">
+                        Bạn chưa có vé nào. <a href="index.html">Đặt vé ngay</a>
+                    </div>
+                `;
+                return;
+            }
+
+            tickets.forEach(ticket => {
+                const card = document.createElement('div');
+                card.className = 'ticket-card';
+                card.innerHTML = `
+                    <div class="ticket-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-0">
+                                <i class="fas ${ticket.type === 'train' ? 'fa-train' : 'fa-plane'} me-2"></i>
+                                ${ticket.departure} → ${ticket.arrival}
+                            </h5>
+                            <small class="text-muted">Mã đặt chỗ: #${ticket.id}</small>
+                        </div>
+                        <span class="ticket-status status-${ticket.status.toLowerCase()}">${ticket.status}</span>
+                    </div>
+                    <div class="ticket-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Hành Khách:</strong> ${ticket.passengerName}</p>
+                                <p><strong>Số CMND:</strong> ${ticket.idNumber}</p>
+                                <p><strong>Email:</strong> ${ticket.email}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Ngày:</strong> ${ticket.date}</p>
+                                <p><strong>Giờ Khởi Hành:</strong> ${ticket.departureTime}</p>
+                                <p><strong>Giờ Đến:</strong> ${ticket.arrivalTime}</p>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <button onclick="downloadTicket(${ticket.id})" class="btn btn-outline-primary me-2">Tải Vé</button>
+                            ${ticket.status === 'Confirmed' ? 
+                                `<button onclick="cancelTicket(${ticket.id})" class="btn btn-outline-danger">Hủy Vé</button>` : 
+                                ''}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = 'login.html';
+        }
+
+        // Initial display
+        displayTickets();
+    </script>
+</body>
+</html> 
