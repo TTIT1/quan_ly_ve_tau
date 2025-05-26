@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="index.html">Đặt Vé</a>
@@ -40,16 +40,27 @@
     </nav>
 
     <div class="container my-5">
-        <h2 class="mb-4">Kết Quả Tìm Kiếm</h2>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">
+                <i class="fas fa-search me-2"></i>Kết Quả Tìm Kiếm
+            </h2>
+            <a href="index.html" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left me-2"></i>Quay Lại
+            </a>
+        </div>
         
         <div class="row">
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Bộ Lọc</h5>
+                        <h5 class="card-title mb-4">
+                            <i class="fas fa-filter me-2"></i>Bộ Lọc
+                        </h5>
                         <form id="filterForm">
-                            <div class="mb-3">
-                                <label class="form-label">Khoảng Giá</label>
+                            <div class="mb-4">
+                                <label class="form-label">
+                                    <i class="fas fa-tag me-2"></i>Khoảng Giá
+                                </label>
                                 <select class="form-select" id="priceRange">
                                     <option value="all">Tất Cả Giá</option>
                                     <option value="0-1000000">Dưới 1.000.000 VND</option>
@@ -57,8 +68,10 @@
                                     <option value="2000000+">Trên 2.000.000 VND</option>
                                 </select>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Khung Giờ</label>
+                            <div class="mb-4">
+                                <label class="form-label">
+                                    <i class="fas fa-clock me-2"></i>Khung Giờ
+                                </label>
                                 <select class="form-select" id="timeRange">
                                     <option value="all">Tất Cả Giờ</option>
                                     <option value="morning">Sáng (6:00 - 12:00)</option>
@@ -66,12 +79,16 @@
                                     <option value="evening">Tối (18:00 - 24:00)</option>
                                 </select>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Ngày Khởi Hành</label>
+                            <div class="mb-4">
+                                <label class="form-label">
+                                    <i class="fas fa-calendar me-2"></i>Ngày Khởi Hành
+                                </label>
                                 <input type="date" class="form-control" id="dateFilter">
                             </div>
-                            <div class="mb-3" id="airlineFilterGroup" style="display:none;">
-                                <label class="form-label">Hãng Bay</label>
+                            <div class="mb-4" id="airlineFilterGroup" style="display:none;">
+                                <label class="form-label">
+                                    <i class="fas fa-plane me-2"></i>Hãng Bay
+                                </label>
                                 <select class="form-select" id="airlineFilter">
                                     <option value="all">Tất Cả Hãng</option>
                                     <option value="Vietnam Airlines">Vietnam Airlines</option>
@@ -82,8 +99,10 @@
                                     <option value="Japan Airlines">Japan Airlines</option>
                                 </select>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Loại Vé</label>
+                            <div class="mb-4">
+                                <label class="form-label">
+                                    <i class="fas fa-ticket-alt me-2"></i>Loại Vé
+                                </label>
                                 <select class="form-select" id="ticketTypeFilter">
                                     <option value="all">Tất Cả</option>
                                     <option value="Phổ Thông">Phổ Thông</option>
@@ -92,7 +111,9 @@
                                     <option value="Địa Phương">Địa Phương</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">Áp Dụng Bộ Lọc</button>
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-check me-2"></i>Áp Dụng Bộ Lọc
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -136,11 +157,17 @@
                                         <i class="fas fa-train me-2"></i>${item.name} - ${item.type}
                                     </h5>
                                     <p class="card-text">
+                                        <i class="fas fa-map-marker-alt me-2 text-primary"></i>
                                         <strong>Điểm Đi:</strong> ${item.departureStation}<br>
+                                        <i class="fas fa-map-marker-alt me-2 text-primary"></i>
                                         <strong>Điểm Đến:</strong> ${item.arrivalStation}<br>
+                                        <i class="fas fa-clock me-2 text-primary"></i>
                                         <strong>Giờ Khởi Hành:</strong> ${formatDateTime(item.departureTime)}<br>
+                                        <i class="fas fa-clock me-2 text-primary"></i>
                                         <strong>Giờ Đến:</strong> ${formatDateTime(item.arrivalTime)}<br>
-                                        <span class="duration"><i class="fas fa-clock me-1"></i>${item.duration}</span>
+                                        <span class="duration">
+                                            <i class="fas fa-hourglass-half me-1"></i>${item.duration}
+                                        </span>
                                     </p>
                                 </div>
                                 <div class="col-md-4 text-end">
@@ -148,7 +175,9 @@
                                     <p class="available-seats">
                                         <i class="fas fa-chair me-1"></i>Còn ${item.availableSeats} chỗ
                                     </p>
-                                    <button onclick="bookTicket('train', ${item.id})" class="btn btn-primary">Đặt Vé</button>
+                                    <button onclick="bookTicket('train', ${item.id})" class="btn btn-primary">
+                                        <i class="fas fa-ticket-alt me-2"></i>Đặt Vé
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -162,11 +191,17 @@
                                         <i class="fas fa-plane me-2"></i>${item.airline} - ${item.flightNumber}
                                     </h5>
                                     <p class="card-text">
+                                        <i class="fas fa-map-marker-alt me-2 text-primary"></i>
                                         <strong>Điểm Đi:</strong> ${item.departureAirport}<br>
+                                        <i class="fas fa-map-marker-alt me-2 text-primary"></i>
                                         <strong>Điểm Đến:</strong> ${item.arrivalAirport}<br>
+                                        <i class="fas fa-clock me-2 text-primary"></i>
                                         <strong>Giờ Khởi Hành:</strong> ${formatDateTime(item.departureTime)}<br>
+                                        <i class="fas fa-clock me-2 text-primary"></i>
                                         <strong>Giờ Đến:</strong> ${formatDateTime(item.arrivalTime)}<br>
-                                        <span class="duration"><i class="fas fa-clock me-1"></i>${item.duration}</span>
+                                        <span class="duration">
+                                            <i class="fas fa-hourglass-half me-1"></i>${item.duration}
+                                        </span>
                                     </p>
                                 </div>
                                 <div class="col-md-4 text-end">
@@ -174,7 +209,9 @@
                                     <p class="available-seats">
                                         <i class="fas fa-chair me-1"></i>Còn ${item.availableSeats} chỗ
                                     </p>
-                                    <button onclick="bookTicket('flight', ${item.id})" class="btn btn-primary">Đặt Vé</button>
+                                    <button onclick="bookTicket('flight', ${item.id})" class="btn btn-primary">
+                                        <i class="fas fa-ticket-alt me-2"></i>Đặt Vé
+                                    </button>
                                 </div>
                             </div>
                         </div>

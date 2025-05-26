@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="index.html">Đặt Vé</a>
@@ -36,7 +36,14 @@
     </nav>
 
     <div class="container my-5">
-        <h2 class="mb-4">Vé Của Tôi</h2>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">
+                <i class="fas fa-ticket-alt me-2"></i>Vé Của Tôi
+            </h2>
+            <a href="index.html" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>Đặt Vé Mới
+            </a>
+        </div>
         
         <div class="row">
             <div class="col-md-12">
@@ -61,8 +68,12 @@
             
             if (tickets.length === 0) {
                 container.innerHTML = `
-                    <div class="alert alert-info">
-                        Bạn chưa có vé nào. <a href="index.html">Đặt vé ngay</a>
+                    <div class="alert alert-info d-flex align-items-center">
+                        <i class="fas fa-info-circle me-3 fs-4"></i>
+                        <div>
+                            Bạn chưa có vé nào. 
+                            <a href="index.html" class="alert-link">Đặt vé ngay</a>
+                        </div>
                     </div>
                 `;
                 return;
@@ -78,27 +89,54 @@
                                 <i class="fas ${ticket.type === 'train' ? 'fa-train' : 'fa-plane'} me-2"></i>
                                 ${ticket.departure} → ${ticket.arrival}
                             </h5>
-                            <small class="text-muted">Mã đặt chỗ: #${ticket.id}</small>
+                            <small class="text-white-50">Mã đặt chỗ: #${ticket.id}</small>
                         </div>
-                        <span class="ticket-status status-${ticket.status.toLowerCase()}">${ticket.status}</span>
+                        <span class="ticket-status status-${ticket.status.toLowerCase()}">
+                            <i class="fas ${ticket.status === 'Confirmed' ? 'fa-check-circle' : 
+                                          ticket.status === 'Cancelled' ? 'fa-times-circle' : 
+                                          'fa-clock'} me-1"></i>
+                            ${ticket.status}
+                        </span>
                     </div>
                     <div class="ticket-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <p><strong>Hành Khách:</strong> ${ticket.passengerName}</p>
-                                <p><strong>Số CMND:</strong> ${ticket.idNumber}</p>
-                                <p><strong>Email:</strong> ${ticket.email}</p>
+                                <p class="mb-2">
+                                    <i class="fas fa-user me-2 text-primary"></i>
+                                    <strong>Hành Khách:</strong> ${ticket.passengerName}
+                                </p>
+                                <p class="mb-2">
+                                    <i class="fas fa-id-card me-2 text-primary"></i>
+                                    <strong>Số CMND:</strong> ${ticket.idNumber}
+                                </p>
+                                <p class="mb-2">
+                                    <i class="fas fa-envelope me-2 text-primary"></i>
+                                    <strong>Email:</strong> ${ticket.email}
+                                </p>
                             </div>
                             <div class="col-md-6">
-                                <p><strong>Ngày:</strong> ${ticket.date}</p>
-                                <p><strong>Giờ Khởi Hành:</strong> ${ticket.departureTime}</p>
-                                <p><strong>Giờ Đến:</strong> ${ticket.arrivalTime}</p>
+                                <p class="mb-2">
+                                    <i class="fas fa-calendar me-2 text-primary"></i>
+                                    <strong>Ngày:</strong> ${ticket.date}
+                                </p>
+                                <p class="mb-2">
+                                    <i class="fas fa-clock me-2 text-primary"></i>
+                                    <strong>Giờ Khởi Hành:</strong> ${ticket.departureTime}
+                                </p>
+                                <p class="mb-2">
+                                    <i class="fas fa-clock me-2 text-primary"></i>
+                                    <strong>Giờ Đến:</strong> ${ticket.arrivalTime}
+                                </p>
                             </div>
                         </div>
-                        <div class="mt-3">
-                            <button onclick="downloadTicket(${ticket.id})" class="btn btn-outline-primary me-2">Tải Vé</button>
+                        <div class="mt-4">
+                            <button onclick="downloadTicket(${ticket.id})" class="btn btn-outline-primary me-2">
+                                <i class="fas fa-download me-2"></i>Tải Vé
+                            </button>
                             ${ticket.status === 'Confirmed' ? 
-                                `<button onclick="cancelTicket(${ticket.id})" class="btn btn-outline-danger">Hủy Vé</button>` : 
+                                `<button onclick="cancelTicket(${ticket.id})" class="btn btn-outline-danger">
+                                    <i class="fas fa-times-circle me-2"></i>Hủy Vé
+                                </button>` : 
                                 ''}
                         </div>
                     </div>

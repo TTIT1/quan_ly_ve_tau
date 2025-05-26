@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="bg-light">
     <script>
         if (!localStorage.getItem('isLoggedIn')) {
             window.location.href = 'login.html';
@@ -47,33 +47,66 @@
 
     <div class="container">
         <div class="booking-container">
-            <h2 class="text-center mb-4">Đặt Vé</h2>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">
+                    <i class="fas fa-ticket-alt me-2"></i>Đặt Vé
+                </h2>
+                <a href="javascript:history.back()" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left me-2"></i>Quay Lại
+                </a>
+            </div>
             
             <div class="trip-details">
                 <div class="row">
                     <div class="col-md-6">
-                        <h5><i class="fas fa-info-circle me-2"></i>Thông Tin Chuyến Đi</h5>
-                        <p><strong>Điểm Đi:</strong> <span id="departure"></span></p>
-                        <p><strong>Điểm Đến:</strong> <span id="arrival"></span></p>
-                        <p><strong>Ngày:</strong> <span id="date"></span></p>
+                        <h5>
+                            <i class="fas fa-info-circle me-2"></i>Thông Tin Chuyến Đi
+                        </h5>
+                        <p class="mb-2">
+                            <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                            <strong>Điểm Đi:</strong> <span id="departure"></span>
+                        </p>
+                        <p class="mb-2">
+                            <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                            <strong>Điểm Đến:</strong> <span id="arrival"></span>
+                        </p>
+                        <p class="mb-2">
+                            <i class="fas fa-calendar me-2 text-primary"></i>
+                            <strong>Ngày:</strong> <span id="date"></span>
+                        </p>
                     </div>
                     <div class="col-md-6">
-                        <h5><i class="fas fa-clock me-2"></i>Lịch Trình</h5>
-                        <p><strong>Giờ Khởi Hành:</strong> <span id="departureTime"></span></p>
-                        <p><strong>Giờ Đến:</strong> <span id="arrivalTime"></span></p>
-                        <p><strong>Thời Gian:</strong> <span id="duration"></span></p>
+                        <h5>
+                            <i class="fas fa-clock me-2"></i>Lịch Trình
+                        </h5>
+                        <p class="mb-2">
+                            <i class="fas fa-plane-departure me-2 text-primary"></i>
+                            <strong>Giờ Khởi Hành:</strong> <span id="departureTime"></span>
+                        </p>
+                        <p class="mb-2">
+                            <i class="fas fa-plane-arrival me-2 text-primary"></i>
+                            <strong>Giờ Đến:</strong> <span id="arrivalTime"></span>
+                        </p>
+                        <p class="mb-2">
+                            <i class="fas fa-hourglass-half me-2 text-primary"></i>
+                            <strong>Thời Gian:</strong> <span id="duration"></span>
+                        </p>
                     </div>
                 </div>
             </div>
 
             <div class="passenger-form">
-                <h4 class="mb-4">Thông Tin Hành Khách</h4>
+                <h4 class="mb-4">
+                    <i class="fas fa-users me-2"></i>Thông Tin Hành Khách
+                </h4>
                 <form id="bookingForm">
                     <input type="hidden" id="tripId" name="tripId">
                     <input type="hidden" id="tripType" name="tripType">
                     
-                    <div class="mb-3">
-                        <label class="form-label">Số Lượng Hành Khách</label>
+                    <div class="mb-4">
+                        <label class="form-label">
+                            <i class="fas fa-user-friends me-2"></i>Số Lượng Hành Khách
+                        </label>
                         <select class="form-select" id="passengerCount" name="passengerCount" onchange="updatePassengerForms()">
                             <option value="1">1 Hành Khách</option>
                             <option value="2">2 Hành Khách</option>
@@ -85,48 +118,68 @@
                     <div id="passengerForms">
                         <!-- First passenger form -->
                         <div class="passenger-details mb-4">
-                            <h5>Hành Khách 1</h5>
+                            <h5>
+                                <i class="fas fa-user me-2"></i>Hành Khách 1
+                            </h5>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Họ và Tên</label>
-                                    <input type="text" class="form-control" name="passengers[0].fullName" required>
+                                    <label class="form-label">
+                                        <i class="fas fa-user me-2"></i>Họ và Tên
+                                    </label>
+                                    <input type="text" class="form-control" name="passengers[0].fullName" placeholder="Nhập họ và tên" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Số CMND/Hộ Chiếu</label>
-                                    <input type="text" class="form-control" name="passengers[0].idNumber" required>
+                                    <label class="form-label">
+                                        <i class="fas fa-id-card me-2"></i>Số CMND/Hộ Chiếu
+                                    </label>
+                                    <input type="text" class="form-control" name="passengers[0].idNumber" placeholder="Nhập số CMND/Hộ chiếu" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Email</label>
-                                    <input type="email" class="form-control" name="passengers[0].email" required>
+                                    <label class="form-label">
+                                        <i class="fas fa-envelope me-2"></i>Email
+                                    </label>
+                                    <input type="email" class="form-control" name="passengers[0].email" placeholder="Nhập email" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Số Điện Thoại</label>
-                                    <input type="tel" class="form-control" name="passengers[0].phone" required>
+                                    <label class="form-label">
+                                        <i class="fas fa-phone me-2"></i>Số Điện Thoại
+                                    </label>
+                                    <input type="tel" class="form-control" name="passengers[0].phone" placeholder="Nhập số điện thoại" required>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="mb-4">
-                        <h5>Thông Tin Thanh Toán</h5>
+                        <h5>
+                            <i class="fas fa-credit-card me-2"></i>Thông Tin Thanh Toán
+                        </h5>
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Số Thẻ</label>
-                                <input type="text" class="form-control" name="cardNumber" required>
+                                <label class="form-label">
+                                    <i class="fas fa-credit-card me-2"></i>Số Thẻ
+                                </label>
+                                <input type="text" class="form-control" name="cardNumber" placeholder="Nhập số thẻ" required>
                             </div>
                             <div class="col-md-3 mb-3">
-                                <label class="form-label">Ngày Hết Hạn</label>
+                                <label class="form-label">
+                                    <i class="fas fa-calendar-alt me-2"></i>Ngày Hết Hạn
+                                </label>
                                 <input type="text" class="form-control" placeholder="MM/YY" name="expiryDate" required>
                             </div>
                             <div class="col-md-3 mb-3">
-                                <label class="form-label">CVV</label>
-                                <input type="text" class="form-control" name="cvv" required>
+                                <label class="form-label">
+                                    <i class="fas fa-lock me-2"></i>CVV
+                                </label>
+                                <input type="text" class="form-control" name="cvv" placeholder="CVV" required>
                             </div>
                         </div>
                     </div>
 
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-primary btn-lg">Xác Nhận Đặt Vé</button>
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-check-circle me-2"></i>Xác Nhận Đặt Vé
+                        </button>
                     </div>
                 </form>
             </div>
@@ -202,23 +255,33 @@
                 const form = document.createElement('div');
                 form.className = 'passenger-details mb-4';
                 form.innerHTML = `
-                    <h5>Hành Khách ${i + 1}</h5>
+                    <h5>
+                        <i class="fas fa-user me-2"></i>Hành Khách ${i + 1}
+                    </h5>
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Họ và Tên</label>
-                            <input type="text" class="form-control" name="passengers[${i}].fullName" required>
+                            <label class="form-label">
+                                <i class="fas fa-user me-2"></i>Họ và Tên
+                            </label>
+                            <input type="text" class="form-control" name="passengers[${i}].fullName" placeholder="Nhập họ và tên" required>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Số CMND/Hộ Chiếu</label>
-                            <input type="text" class="form-control" name="passengers[${i}].idNumber" required>
+                            <label class="form-label">
+                                <i class="fas fa-id-card me-2"></i>Số CMND/Hộ Chiếu
+                            </label>
+                            <input type="text" class="form-control" name="passengers[${i}].idNumber" placeholder="Nhập số CMND/Hộ chiếu" required>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-control" name="passengers[${i}].email" required>
+                            <label class="form-label">
+                                <i class="fas fa-envelope me-2"></i>Email
+                            </label>
+                            <input type="email" class="form-control" name="passengers[${i}].email" placeholder="Nhập email" required>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Số Điện Thoại</label>
-                            <input type="tel" class="form-control" name="passengers[${i}].phone" required>
+                            <label class="form-label">
+                                <i class="fas fa-phone me-2"></i>Số Điện Thoại
+                            </label>
+                            <input type="tel" class="form-control" name="passengers[${i}].phone" placeholder="Nhập số điện thoại" required>
                         </div>
                     </div>
                 `;
